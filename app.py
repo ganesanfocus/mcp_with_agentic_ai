@@ -44,6 +44,7 @@ async def process_prompt(prompt: str):
                     for t in mcp_tools.tools
                 ]
             }]
+            print(tools)
 
             if prompt.lower().startswith("research "):
 
@@ -67,6 +68,7 @@ async def process_prompt(prompt: str):
             )
 
             part = response.candidates[0].content.parts[0]
+            print("Response:", part.text)
 
             if hasattr(part, "function_call"):
                 print("Function called:", part.function_call.name)

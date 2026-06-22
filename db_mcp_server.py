@@ -1,10 +1,11 @@
 # db_mcp_server.py
 from mcp.server.fastmcp import FastMCP
-from db_tools import read_tasks, insert_task, update_task
 
-from weather_tools import get_weather
-from file_tools import read_file
-
+# import tools in server
+from tools.db_tools import read_tasks, insert_task, update_task
+from tools.weather_tools import get_weather
+from tools.file_tools import read_file, write_file
+from tools.search_tools import search_web
 
 mcp = FastMCP("all-tools")
 
@@ -29,7 +30,7 @@ def update_task_tool(task_id: int, title: str):
     """
     return update_task(task_id, title)
 
-from file_tools import write_file
+
 @mcp.tool()
 def write_file_tool(
     filename: str,
@@ -48,7 +49,7 @@ def weather_tool(city: str):
     return get_weather(city)
 
 
-from search_tools import search_web
+
 @mcp.tool()
 def read_file_tool(filename: str):
     """
