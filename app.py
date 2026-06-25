@@ -92,51 +92,63 @@ async def process_prompt(prompt: str):
 
 @app.get("/", response_class=HTMLResponse)
 async def home():
-
     return """
     <html>
-        <body>
-            <h2>MCP Task Assistant</h2>
-
+    <head>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+        body { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: #667eea; }
+        .card { background: white; padding: 40px; border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.2); width: 480px; }
+        h2 { color: #333; margin-bottom: 24px; font-size: 22px; }
+        input { width: 100%; padding: 12px 16px; border: 2px solid #eee; border-radius: 8px; font-size: 15px; outline: none; transition: border 0.2s; }
+        input:focus { border-color: #667eea; }
+        button { width: 100%; margin-top: 12px; padding: 12px; background: #667eea; color: white; border: none; border-radius: 8px; font-size: 15px; cursor: pointer; transition: background 0.2s; }
+        button:hover { background: #5a6fd6; }
+    </style>
+    </head>
+    <body>
+        <div class="card">
+            <h2>🤖 MCP Task Assistant</h2>
             <form method="post">
-                <input type="text"
-                       name="prompt"
-                       style="width:400px">
-
-                <button type="submit">
-                    Submit
-                </button>
+                <input type="text" name="prompt" placeholder="Ask me anything...">
+                <button type="submit">Submit</button>
             </form>
-        </body>
+        </div>
+    </body>
     </html>
     """
 
 
 @app.post("/", response_class=HTMLResponse)
 async def submit(prompt: str = Form(...)):
-
     result = await process_prompt(prompt)
-
     return f"""
     <html>
-        <body>
-            <h2>MCP Task Assistant</h2>
-
+    <head>
+    <style>
+        * {{ margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }}
+        body {{ min-height: 100vh; display: flex; align-items: center; justify-content: center; background: #667eea; }}
+        .card {{ background: white; padding: 40px; border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.2); width: 480px; }}
+        h2 {{ color: #333; margin-bottom: 24px; font-size: 22px; }}
+        input {{ width: 100%; padding: 12px 16px; border: 2px solid #eee; border-radius: 8px; font-size: 15px; outline: none; transition: border 0.2s; }}
+        input:focus {{ border-color: #667eea; }}
+        button {{ width: 100%; margin-top: 12px; padding: 12px; background: #667eea; color: white; border: none; border-radius: 8px; font-size: 15px; cursor: pointer; transition: background 0.2s; }}
+        button:hover {{ background: #5a6fd6; }}
+        .result {{ margin-top: 24px; padding: 16px; background: #f4f4f4; border-radius: 8px; border-left: 4px solid #667eea; }}
+        pre {{ white-space: pre-wrap; word-break: break-word; font-size: 14px; color: #444; }}
+    </style>
+    </head>
+    <body>
+        <div class="card">
+            <h2>🤖 MCP Task Assistant</h2>
             <form method="post">
-                <input type="text"
-                       name="prompt"
-                       value="{prompt}"
-                       style="width:400px">
-
-                <button type="submit">
-                    Submit
-                </button>
+                <input type="text" name="prompt" value="{prompt}" placeholder="Ask me anything...">
+                <button type="submit">Submit</button>
             </form>
-
-            <hr>
-
-            <pre>{result}</pre>
-
-        </body>
+            <div class="result">
+                <pre>{result}</pre>
+            </div>
+        </div>
+    </body>
     </html>
     """
